@@ -1,0 +1,8 @@
+Amsterdam;32,368;4.9036
+Berlin;52.5166;13.405
+Darmstadt;49.8728;8.6512
+Frankfurt;52.368;4.9036
+H_da;49.8673;8.6382
+Heidelberg;49.4076;8.69079
+Mannheim;49.4967;8.47955
+Stuttgart;48.7823;9.17702

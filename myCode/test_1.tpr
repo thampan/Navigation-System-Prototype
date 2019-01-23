@@ -1,0 +1,37 @@
+[Project]
+Language=cpp
+Project.JDK=C:\\tools\\common\\TogetherArchitect\\jdk
+Root.0=$TGH$/lib/javax.jar
+Root.0.access=import
+Root.1=$TGH$/jdk/jre/lib/rt.jar
+Root.1.access=import
+Root.1.non_removable=
+Root.2=$PROJECT_DIR$
+Root.2.access=writable
+Root.2.file_types=cpp_source;cpp_header;element;diagram;;java_class
+Root.2.package_prefix=
+Root.2.srcControlEnabled=false
+Root.2.srcControlProject=
+Version=3.0
+projectfile.encoding=Cp1252
+[workspace]
+Developer.CodingWorkspace={{0,2,-1,0,0,0,0,0,0,1,0,50,75,25,-1,-1,-1,-1}${0,1,-1,0,0,0,0,1,0,1,0,50,75,25,-1,-1,-1,-1}${0,3,-1,0,0,0,0,1,0,1,0,66,50,25,-1,-1,-1,-1}${0,3,-1,0,0,0,0,1,0,1,0,66,50,25,-1,-1,-1,-1}${0,-1,-1,0,0,0,0,0,0,1,0,5,5,5,-1,-1,-1,-1}${0,5,-1,0,0,0,0,0,0,1,0,50,50,25,-1,-1,-1,-1}${0,4,-1,0,0,0,0,1,0,1,1,66,50,25,-1,-1,-1,-1}${0,7,-1,0,0,0,0,0,0,1,0,50,50,75,-1,-1,-1,-1}}
+Developer.DebugWorkspace={{0,2,-1,0,0,0,0,0,0,1,0,50,75,25,-1,-1,-1,-1}${0,1,-1,0,0,0,0,1,0,1,1,50,75,25,-1,-1,-1,-1}${0,3,-1,0,0,0,0,0,0,1,0,50,50,25,-1,-1,-1,-1}${0,3,-1,0,0,0,0,0,0,1,0,50,50,25,-1,-1,-1,-1}${0,-1,-1,0,0,0,0,0,0,1,0,5,5,5,-1,-1,-1,-1}${0,4,-1,0,0,0,0,0,0,1,0,50,50,25,-1,-1,-1,-1}${0,0,-1,0,0,0,0,1,0,1,0,75,5,5,-1,-1,-1,-1}${0,7,-1,0,0,0,0,0,0,1,0,50,50,75,-1,-1,-1,-1}}
+Developer.DesignWorkspace={{0,2,-1,0,0,0,0,1,0,1,1,100,75,22,-1,-1,-1,-1}${0,1,-1,0,0,0,0,0,0,1,0,100,75,22,-1,-1,-1,-1}${0,3,-1,0,0,0,0,0,0,1,0,50,50,22,-1,-1,-1,-1}${0,3,-1,0,0,0,0,0,0,1,0,50,50,22,-1,-1,-1,-1}${0,-1,-1,0,0,0,0,0,0,1,0,5,5,5,-1,-1,-1,-1}${0,4,-1,0,0,0,0,0,0,1,0,50,50,22,-1,-1,-1,-1}${0,0,-1,0,0,0,0,0,0,1,0,75,5,5,-1,-1,-1,-1}${0,7,-1,0,0,0,0,0,0,1,0,50,50,75,-1,-1,-1,-1}}
+Developer.test_1={{0,2,-1,0,0,0,0,0,0,1,0,50,75,25,-1,-1,-1,-1}${0,1,-1,0,0,0,0,0,0,1,0,50,75,25,-1,-1,-1,-1}${0,3,-1,0,0,0,0,0,0,1,0,50,50,25,-1,-1,-1,-1}${0,3,-1,0,0,0,0,0,0,1,0,50,50,25,-1,-1,-1,-1}${0,-1,-1,0,0,0,0,0,0,1,0,5,5,5,-1,-1,-1,-1}${0,4,-1,0,0,0,0,0,0,1,0,50,50,25,-1,-1,-1,-1}${0,0,-1,0,0,0,0,1,0,1,1,75,5,5,-1,-1,-1,-1}${0,7,-1,0,0,0,0,0,0,1,0,50,50,75,-1,-1,-1,-1}}
+names.Developer={test_1,DesignWorkspace,CodingWorkspace,DebugWorkspace}
+[editor]
+recent.file.0=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\CWaypoint.h
+recent.file.1=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\CPoiDatabase.h
+recent.file.2=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\CNavigationSystem.h
+recent.file.3=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\CPOI.h
+recent.file.4=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\CRoute.h
+recent.file.5=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\CGPSSensor.h
+recent.file.6=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\Class1.h
+recent.file.7=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\apt\\exercises_workspace\\assignments\\myCode\\Class2.h
+recent.file.8=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\APT\\exercises_workspace\\assignments\\myCode\\Dog.h
+recent.file.9=C:\\Users\\Jishnu M Thampan\\Desktop\\h_da\\EIT\\sem_1\\APT\\exercises_workspace\\assignments\\myCode\\Class1.h
+[vcs]
+provider.class=CVS LAN
+[lastOpenProjectName]
+Developer=DesignWorkspace
