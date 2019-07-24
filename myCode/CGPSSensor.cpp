@@ -1,5 +1,4 @@
 /***************************************************************************
- *============= Copyright by Darmstadt University of Applied Sciences =======
  ****************************************************************************
  * Filename        : CGPSSENSOR.CPP
  * Author          : Jishnu M Thampan
