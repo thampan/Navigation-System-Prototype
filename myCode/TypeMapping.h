@@ -1,5 +1,4 @@
 /***************************************************************************
-*============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : Typemapping.H
 * Author          : Jishnu M Thampan
