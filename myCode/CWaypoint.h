@@ -1,5 +1,4 @@
 /***************************************************************************
-*============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : CWAYPOINT.H
 * Author          : Jishnu M Thampan
