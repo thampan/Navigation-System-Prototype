@@ -1,5 +1,4 @@
 /***************************************************************************
-*============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : CAttributeExtractor.cpp
 * Author          : Jishnu M Thampan
