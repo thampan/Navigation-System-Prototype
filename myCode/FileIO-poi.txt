@@ -1,9 +1,0 @@
-GASSTATION;Darmstadt;more expensive but good;49.8728;8.2512
-TOURISTIC;Eberstadt;Frankenstein Castle!!;49.2233;10.4312
-TOURISTIC;Frankfurt;Rhine River;48.8738;6.6712
-TOURISTIC;Frankfurt Cathedral; Roman Catholic Church;48.9988;6.2123
-RESTAURANT;Mensa HDA;the best Mensa;49.8728;8.6512
-RESTAURANT;Radieschen;Vegan Restaurant;49.0011;8.9876
-RESTAURANT;Sitte;more expensive but good;49.6118;8.4578
-UNIVERSITY;TU Darmstadt;Research oriented;49.8889;8.6121
-GASSTATION;Total Tankstelle;Best gasstation in Berlin;52.52;8.7766
