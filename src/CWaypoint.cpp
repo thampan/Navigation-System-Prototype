@@ -4,14 +4,10 @@
 * Filename        : CWAYPOINT.CPP
 * Author          : Jishnu M Thampan
 * Description     : Implementation of class CWaypoint
-* 					CWaypoint represents a Waypoint which
-*consist of
-* 					latitude and longitude and a name. This
-*class provides
-* 					methods to print the Waypoints in different
-*formats,
-* 					and methods to calculate distance between
-*two Waypoints.
+* CWaypoint represents a Waypoint which consist of
+* latitude and longitude and a name. This class provides
+* methods to print the Waypoints in different formats,
+* and methods to calculate distance between two Waypoints.
 ****************************************************************************/
 // System Include Files
 #include <math.h>
@@ -20,12 +16,12 @@
 // Own Include Files
 #include <nsp/CWaypoint.h>
 
-#define EARTH_RADIUS_LENGTH                                                    \
-  6378.17             /**< \brief Defines the Radius of Earth in kilometers*/
-#define PI 3.14159265 /**< \brief Defines the constant PI */
-#define CONVERT_DEGREE_TO_RADIAN(x)                                            \
-  (x * PI / 180)     /**< \brief Defines the conversion from degree to radian*/
-#define TIME_UNIT 60 /**< \brief Defines the time unit  */
+#define EARTH_RADIUS_LENGTH \
+  6378.17             /**< @brief Defines the Radius of Earth in kilometers*/
+#define PI 3.14159265 /**< @brief Defines the constant PI */
+#define CONVERT_DEGREE_TO_RADIAN(x) \
+  (x * PI / 180)     /**< @brief Defines the conversion from degree to radian*/
+#define TIME_UNIT 60 /**< @brief Defines the time unit  */
 
 // Method Implementations
 
@@ -41,7 +37,8 @@
  * [IN]
  */
 CWaypoint::CWaypoint(double latitude, double longitude, std::string name)
-    : m_longitude(longitude), m_latitude(latitude), m_name(name) {
+    : m_longitude(longitude), m_latitude(latitude), m_name(name)
+{
   this->set(name, latitude, longitude);
 #ifdef SHOWADRESS
   std::cout << "CWaypoint::constructor()" << std::endl;
@@ -67,9 +64,11 @@ CWaypoint::CWaypoint(double latitude, double longitude, std::string name)
  * @param double latitude  - Longitude value of the CWaypoint object [IN]
  * @return None
  */
-bool CWaypoint::set(std::string name, double latitude, double longitude) {
+bool CWaypoint::set(std::string name, double latitude, double longitude)
+{
   bool isValidWaypoint = false;
-  do {
+  do
+  {
     if (((MIN_LATITUDE <= latitude) && (MAX_LATITUDE >= latitude)) &&
         ((MIN_LONGITUDE <= longitude) &&
          (MAX_LONGITUDE >=
@@ -77,26 +76,33 @@ bool CWaypoint::set(std::string name, double latitude, double longitude) {
                                                                                   fall within the valid range*/
     {
       isValidWaypoint = true;
-    } else {
+    }
+    else
+    {
       std::cout << "ERROR!:set()failed: Invalid Latitude/Longitude Parameters!"
                 << std::endl;
       isValidWaypoint = false;
       break;
     }
-    if (name.find_first_not_of(' ') != std::string::npos) {
+    if (name.find_first_not_of(' ') != std::string::npos)
+    {
       isValidWaypoint = true;
-    } else {
+    }
+    else
+    {
       std::cout << "--ERROR!:set()failed: Invalid Name!" << std::endl;
       isValidWaypoint = false;
       break;
     }
   } while (false);
 
-  if (isValidWaypoint) {
+  if (isValidWaypoint)
+  {
     this->m_latitude = latitude;
     this->m_longitude = longitude;
     m_name = name;
-  } else /* If the provided values does not fall in the valid range, set the
+  }
+  else /* If the provided values does not fall in the valid range, set the
             object attributes to default values */
   {
     this->m_latitude = 0;
@@ -135,12 +141,13 @@ double CWaypoint::getLongitude() const { return m_longitude; }
  * @return None
  */
 void CWaypoint::getAllDataByReference(std::string &name, double &latitude,
-                                      double &longitude) const {
+                                      double &longitude) const
+{
   name =
       this->getName(); /* Gets the attribute 'name' of the object and assigns
                           that */
   latitude =
-      this->getLatitude(); /* Gets the attribute 'latitude' of the object and
+      this->getLatitude();          /* Gets the attribute 'latitude' of the object and
                               assigns that */
   longitude = this->getLongitude(); /* Gets the attribute 'longitude' of the
                                        object and assigns that */
@@ -152,7 +159,8 @@ void CWaypoint::getAllDataByReference(std::string &name, double &latitude,
  * @param const CWaypoint& - Reference to the CWaypoint object [IN]
  * @return calculated distance
  */
-double CWaypoint::calculateDistance(const CWaypoint &wp) {
+double CWaypoint::calculateDistance(const CWaypoint &wp)
+{
   double latitude_1 =
       CONVERT_DEGREE_TO_RADIAN(
           this->getLatitude()); /* Convert the first latitude from degree to
@@ -196,7 +204,8 @@ void CWaypoint::print(int format) { std::cout << (*this) << std::endl; }
  * @return None
  */
 void CWaypoint::transformLongitude2degmmss(int &deg, int &mm,
-                                           double &ss) const {
+                                           double &ss) const
+{
   deg =
       floor(this->getLongitude()); /* Get the integer portion in the longitude*/
   double decimal =
@@ -204,7 +213,7 @@ void CWaypoint::transformLongitude2degmmss(int &deg, int &mm,
 
   double minutes = (decimal * TIME_UNIT); /* To get the Minute count, multiply
                                              the decimal portion by 60*/
-  mm = floor(minutes); /* The integer portion of the result would hold the
+  mm = floor(minutes);                    /* The integer portion of the result would hold the
                           minutes data */
 
   double seconds =
@@ -219,14 +228,15 @@ void CWaypoint::transformLongitude2degmmss(int &deg, int &mm,
  * @param int& ss  - Reference to seconds [OUT]
  * @return None
  */
-void CWaypoint::transformLatitude2degmmss(int &deg, int &mm, double &ss) const {
+void CWaypoint::transformLatitude2degmmss(int &deg, int &mm, double &ss) const
+{
   deg = floor(this->getLatitude()); /* Get the integer portion in the latitude*/
   double decimal =
       this->getLatitude() - deg; /* Get the decimal part in the latitude */
 
   double minutes = (decimal * TIME_UNIT); /* To get the Minute count, multiply
                                              the decimal portion by 60*/
-  mm = floor(minutes); /* The integer portion of the result would hold the
+  mm = floor(minutes);                    /* The integer portion of the result would hold the
                           minutes data */
 
   double seconds =
@@ -243,7 +253,8 @@ void CWaypoint::transformLatitude2degmmss(int &deg, int &mm, double &ss) const {
  * printed
  * @return None
  */
-std::ostream &operator<<(std::ostream &stream, CWaypoint &wp) {
+std::ostream &operator<<(std::ostream &stream, CWaypoint &wp)
+{
 
   int lat_deg = 0, lat_mm = 0, lon_deg = 0, lon_mm = 0;
   double lat_ss = 0.0, lon_ss = 0.0;

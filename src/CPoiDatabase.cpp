@@ -4,9 +4,8 @@
  * Filename        : CPOIDATABASE.CPP
  * Author          : Jishnu M Thampan
  * Description     : class CPOI
- * 				     This class maintains the database which consists
- *of
- *					 CPOI objects.
+ * This class maintains the database which consists of
+ * CPOI objects.
  ****************************************************************************/
 // Own Include Files
 #include <nsp/CPoiDatabase.h>
@@ -22,7 +21,8 @@ CPoiDatabase::CPoiDatabase() {}
 * @param CPOI const& poi - the POI object to be inserted [IN]
 * @return None
 */
-void CPoiDatabase::addPoi(CPOI const &poi) {
+void CPoiDatabase::addPoi(CPOI const &poi)
+{
   CDatabase::addData(poi.getName(), poi);
 }
 /**
@@ -33,7 +33,8 @@ void CPoiDatabase::addPoi(CPOI const &poi) {
  * @return CPOI* 		   - If present, returns the pointer to the CPOI
  * object in the database, else NULL
  */
-CPOI *CPoiDatabase::getPointerToPoi(std::string name) {
+CPOI *CPoiDatabase::getPointerToPoi(std::string name)
+{
   CPOI *pPoi = CDatabase::getPointerToData(name);
   return pPoi;
 }
@@ -43,7 +44,8 @@ CPOI *CPoiDatabase::getPointerToPoi(std::string name) {
  * the internal container is copied
  * @return None
  */
-void CPoiDatabase::getPoiDatabase(POIDatabaseMap_t &poidDbMap) const {
+void CPoiDatabase::getPoiDatabase(POIDatabaseMap_t &poidDbMap) const
+{
   (CDatabase::getDatabaseContent(poidDbMap));
 }
 /**
@@ -51,7 +53,8 @@ void CPoiDatabase::getPoiDatabase(POIDatabaseMap_t &poidDbMap) const {
  * @param None
  * @return None
  */
-void CPoiDatabase::clearPoiDatabase(void) {
+void CPoiDatabase::clearPoiDatabase(void)
+{
   /* Clear the contents of the Database */
   CDatabase::clearDatabase();
 }

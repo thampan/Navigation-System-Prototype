@@ -4,21 +4,16 @@
  * Filename        : CNAVIGATIONSYSTEM.CPP
  * Author          : Jishnu M Thampan
  * Description     : class CNavigationSystem
- *  				 This class is the controller class for the
- *Navigation
- * 					 System. It is responsible of creating a POI
- *database,
- * 					 creating a route which may consist of
- *Waypoints and
- * 					 Routes. It takes input from GPS Sensor and
- *calculates
- * 					 distance to the nearest POI.
- * 					 CNavigationSystem consists of 3 main
- *modules
- * 					 1. GPS Sensor module
- * 					 2. Route module
- * 					 3. POI Database module
- * 					 4. Waypoint database module
+ * This class is the controller class for the Navigation
+ * System. It is responsible of creating a POI database,
+ * creating a route which may consist of Waypoints and
+ * Routes. It takes input from GPS Sensor and calculates
+ * distance to the nearest POI. CNavigationSystem consists of 3 main
+ * modules
+ * 1. GPS Sensor module
+ * 2. Route module
+ * 3. POI Database module
+ * 4. Waypoint database module
  ****************************************************************************/
 
 // Own Include Files
@@ -45,7 +40,8 @@ CNavigationSystem::CNavigationSystem()
 
   /* Iterate through the Waypoint table and add each of the Waypoint to the
    * Route */
-  for (unsigned int i = 0; i < sizeof(wpTable) / sizeof(CWaypoint); i++) {
+  for (unsigned int i = 0; i < sizeof(wpTable) / sizeof(CWaypoint); i++)
+  {
     m_WpDatabase.addWaypoint(wpTable[i]);
   }
   /* Create a table which stores the POI data which is to be added to the POI
@@ -69,7 +65,8 @@ CNavigationSystem::CNavigationSystem()
 
   /* Iterate through the POI table and add each of the POI to the POI database
    */
-  for (unsigned int i = 0; i < sizeof(poiDbTable) / sizeof(CPOI); i++) {
+  for (unsigned int i = 0; i < sizeof(poiDbTable) / sizeof(CPOI); i++)
+  {
     m_PoiDatabase.addPoi(poiDbTable[i]);
   }
   /* Connect the Database Object with the Route */
@@ -80,7 +77,8 @@ CNavigationSystem::CNavigationSystem()
   csv.setMediaName("FileIO");
   cj.setMediaName("CJson");
 }
-void CNavigationSystem::TC_operatorPlusOverload() {
+void CNavigationSystem::TC_operatorPlusOverload()
+{
   /*Testing + operator */
   std::cout << "============================================================"
             << std::endl;
@@ -115,7 +113,8 @@ void CNavigationSystem::TC_operatorPlusOverload() {
   std::cout << "Sum-------" << std::endl;
   c.print();
 }
-void CNavigationSystem::TC_operatorEqualOverload() {
+void CNavigationSystem::TC_operatorEqualOverload()
+{
   std::cout << "============================================================"
             << std::endl;
   std::cout << "TestCase Executed: " << __FUNCTION__ << std::endl;
@@ -129,7 +128,8 @@ void CNavigationSystem::TC_operatorEqualOverload() {
   std::cout << "==========New Route=========" << std::endl;
   cr.print();
 }
-void CNavigationSystem::TC_operatorPlusEqualOverload() {
+void CNavigationSystem::TC_operatorPlusEqualOverload()
+{
   // 4 cases
   std::cout << "============================================================"
             << std::endl;
@@ -147,7 +147,8 @@ void CNavigationSystem::TC_operatorPlusEqualOverload() {
   m_route += "Frankfurt";
   m_route.print();
 }
-void CNavigationSystem::TC_routeCopyConstructor() {
+void CNavigationSystem::TC_routeCopyConstructor()
+{
   std::cout << "============================================================"
             << std::endl;
   std::cout << "TestCase Executed: " << __FUNCTION__ << std::endl;
@@ -160,27 +161,33 @@ void CNavigationSystem::TC_routeCopyConstructor() {
   std::cout << "==========New Route============" << std::endl;
   cr.print();
 }
-void CNavigationSystem::TC_createDatabases() {
+void CNavigationSystem::TC_createDatabases()
+{
   std::cout << "============================================================"
             << std::endl;
   std::cout << "TestCase Executed: " << __FUNCTION__ << std::endl;
   std::cout << "============================================================"
             << std::endl;
 }
-void CNavigationSystem::TC_writeToFile() {
+void CNavigationSystem::TC_writeToFile()
+{
   /* testing write/read data*/
   std::cout << "============================================================"
             << std::endl;
   std::cout << "TestCase Executed: " << __FUNCTION__ << std::endl;
   std::cout << "============================================================"
             << std::endl;
-  if (cj.writeData(m_WpDatabase, m_PoiDatabase)) {
+  if (cj.writeData(m_WpDatabase, m_PoiDatabase))
+  {
     std::cout << "####### Write to file is successful #######" << std::endl;
-  } else {
+  }
+  else
+  {
     std::cout << "####### Write to file is unsuccessful #######" << std::endl;
   }
 }
-void CNavigationSystem::TC_readMergeMode() {
+void CNavigationSystem::TC_readMergeMode()
+{
   std::cout << "============================================================"
             << std::endl;
   std::cout << "TestCase Executed: " << __FUNCTION__ << std::endl;
@@ -205,7 +212,8 @@ void CNavigationSystem::TC_readMergeMode() {
   std::cout << "\nWP DB:" << std::endl;
   wpDb.print();
 }
-void CNavigationSystem::TC_readReplaceMode() {
+void CNavigationSystem::TC_readReplaceMode()
+{
 #if 0
 	std::cout << "============================================================" << std::endl;
 	std::cout << "TestCase Executed: " << __FUNCTION__ << std::endl;
@@ -238,7 +246,8 @@ void CNavigationSystem::TC_readReplaceMode() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::run(void) {
+void CNavigationSystem::run(void)
+{
   // enterRoute();
   // printRoute();
   // TC_operatorPlusOverload();
@@ -268,7 +277,8 @@ void CNavigationSystem::run(void) {
  * @param  None
  * @return None
  */
-void CNavigationSystem::enterRoute(void) {
+void CNavigationSystem::enterRoute(void)
+{
   /* Add all the Waypoints */
   CWaypoint wpTable[] = {
       CWaypoint(52.3680, 4.9036, "Frankfurt"),
@@ -280,7 +290,8 @@ void CNavigationSystem::enterRoute(void) {
 
   /* Iterate through the Waypoint table and add each of the Waypoint to the
    * Route */
-  for (unsigned int i = 0; i < sizeof(wpTable) / sizeof(CWaypoint); i++) {
+  for (unsigned int i = 0; i < sizeof(wpTable) / sizeof(CWaypoint); i++)
+  {
     // m_WpDatabase.addWaypoint(wpTable[i]);
     m_route.addWaypoint(wpTable[i].getName());
   }
@@ -301,7 +312,8 @@ void CNavigationSystem::enterRoute(void) {
   };
 
   /* Iterate through the POI table and add each of the POI to the Route */
-  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++) {
+  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++)
+  {
     m_route.addPoi(poiTable[i], wpTable[i].getName());
   }
 }
@@ -310,7 +322,8 @@ void CNavigationSystem::enterRoute(void) {
  * @param None
  * @return None
  */
-void CNavigationSystem::printRoute(void) {
+void CNavigationSystem::printRoute(void)
+{
   m_route.print(); /* Print the current route */
 }
 /**
@@ -320,7 +333,8 @@ void CNavigationSystem::printRoute(void) {
  * @param  None
  * @return None
  */
-void CNavigationSystem::printDistanceCurPosNextPoi(void) {
+void CNavigationSystem::printDistanceCurPosNextPoi(void)
+{
   CWaypoint wp =
       m_GPSSensor
           .getCurrentPosition(); /*Get current position from the GPS Sensor */
@@ -341,11 +355,13 @@ void CNavigationSystem::printDistanceCurPosNextPoi(void) {
                 << std::endl;
       cpoiObj.print(); /* Prints the attributes of the obtained nearby POI
                           object */
-    } else             /* Print error if the calculated distance is invalid */
+    }
+    else /* Print error if the calculated distance is invalid */
     {
       std::cout << "No nearby POIs available!" << std::endl;
     }
-  } else /* Print error if the input from the GPS Sensor is wrong */
+  }
+  else /* Print error if the input from the GPS Sensor is wrong */
   {
     std::cout << "ERROR::CNavigationSystem::printDistanceCurPosNextPoi(): "
                  "Wrong input from GPS Sensor"
@@ -363,7 +379,8 @@ void CNavigationSystem::printDistanceCurPosNextPoi(void) {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_addMoreWaypointsThanSpecified() {
+void CNavigationSystem::TC_addMoreWaypointsThanSpecified()
+{
   const CWaypoint wpTable[] = {
       CWaypoint(48.7823, 9.1770200, "Stuttgart"),
       CWaypoint(49.4076, 8.69079, "Heidelberg"),
@@ -374,7 +391,8 @@ void CNavigationSystem::TC_addMoreWaypointsThanSpecified() {
 
   /* Iterate through the Waypoint table and add each of the Waypoint to the
    * Route */
-  for (unsigned int i = 0; i < sizeof(wpTable) / sizeof(CWaypoint); i++) {
+  for (unsigned int i = 0; i < sizeof(wpTable) / sizeof(CWaypoint); i++)
+  {
     // m_route.addWayPoint(wpTable[i]);
   }
 }
@@ -385,7 +403,8 @@ void CNavigationSystem::TC_addMoreWaypointsThanSpecified() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_addAllPoiToRoute() {
+void CNavigationSystem::TC_addAllPoiToRoute()
+{
   // m_route.addPoi("TU Darmstadt");
 }
 /**
@@ -394,7 +413,8 @@ void CNavigationSystem::TC_addAllPoiToRoute() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_addMorePoiThanSpecifiedToRoute() {
+void CNavigationSystem::TC_addMorePoiThanSpecifiedToRoute()
+{
   // m_route.addPoi("Frankfurt Cathedral");
 }
 /**
@@ -403,13 +423,15 @@ void CNavigationSystem::TC_addMorePoiThanSpecifiedToRoute() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_addInvalidPoi() {
+void CNavigationSystem::TC_addInvalidPoi()
+{
   /* Create a table which stores the POI data which is to be added to the Route
    */
   const std::string poiTable[] = {"Something"};
 
   /* Iterate through the POI table and add each of the POI to the Route */
-  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++) {
+  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++)
+  {
     // m_route.addPoi(poiTable[i]);
   }
 }
@@ -419,7 +441,8 @@ void CNavigationSystem::TC_addInvalidPoi() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_poiDatabaseOverflow() {
+void CNavigationSystem::TC_poiDatabaseOverflow()
+{
   CPOI poiDbTable[] = {
       CPOI(CPOI::RESTAURANT, "Test1", "Overflow-test-data", 49.8728, 8.6512),
       CPOI(CPOI::TOURISTIC, "Test2", "Overflow-test-data2", 48.8738, 6.6712),
@@ -427,7 +450,8 @@ void CNavigationSystem::TC_poiDatabaseOverflow() {
 
   /* Iterate through the POI table and add each of the POI to the POI database
    */
-  for (unsigned int i = 0; i < sizeof(poiDbTable) / sizeof(CPOI); i++) {
+  for (unsigned int i = 0; i < sizeof(poiDbTable) / sizeof(CPOI); i++)
+  {
     m_PoiDatabase.addPoi(poiDbTable[i]);
   }
 }
@@ -439,7 +463,8 @@ void CNavigationSystem::TC_poiDatabaseOverflow() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_poiDatabaseUnderflow() {
+void CNavigationSystem::TC_poiDatabaseUnderflow()
+{
   CPoiDatabase tempPoiDb;
   CRoute tempRoute; // create just 1 poi and 0 waypoints
   tempRoute.connectToPoiDatabase(&tempPoiDb);
@@ -448,7 +473,8 @@ void CNavigationSystem::TC_poiDatabaseUnderflow() {
   const std::string poiTable[] = {"Frankfurt Cathedral"};
 
   /* Iterate through the POI table and add each of the POI to the Route */
-  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++) {
+  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++)
+  {
     // tempRoute.addPoi(poiTable[i]);
   }
   tempRoute.print();
@@ -460,14 +486,16 @@ void CNavigationSystem::TC_poiDatabaseUnderflow() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_invalidDatabasePointer() {
+void CNavigationSystem::TC_invalidDatabasePointer()
+{
   m_route.connectToPoiDatabase(NULL);
   /* Create a table which stores the POI data which is to be added to the Route
    */
   const std::string poiTable[] = {"Frankfurt Cathedral"};
 
   /* Iterate through the POI table and add each of the POI to the Route */
-  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++) {
+  for (unsigned int i = 0; i < sizeof(poiTable) / sizeof(std::string); i++)
+  {
     // m_route.addPoi(poiTable[i]);
   }
   m_route.print();
@@ -480,7 +508,8 @@ void CNavigationSystem::TC_invalidDatabasePointer() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_addInvalidPoiToPoiDatabase() {
+void CNavigationSystem::TC_addInvalidPoiToPoiDatabase()
+{
   CPOI testPoi(CPOI::TOURISTIC, "Virtual place", "unknown data", -200, 200);
   m_PoiDatabase.addPoi(testPoi);
   // m_route.addPoi("Virtual place");
@@ -493,7 +522,8 @@ void CNavigationSystem::TC_addInvalidPoiToPoiDatabase() {
  * @param  None
  * @return None
  */
-void CNavigationSystem::TC_getInvalidDataFromGPSSensor() {
+void CNavigationSystem::TC_getInvalidDataFromGPSSensor()
+{
   CWaypoint wp = m_GPSSensor.getCurrentPosition();
   wp.print(DEGREE);
 }

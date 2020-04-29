@@ -7,7 +7,8 @@
 //#define TEST_1
 #define TEST_NAVIGATION_SYSTEM
 
-int main(void) {
+int main(void)
+{
 #ifdef TEST_1
   CWaypoint amsterdam(52.3680, 4.9036, "amsterdam"),
       darmstadt(49.8728, 8.6512, "darmstadt"),

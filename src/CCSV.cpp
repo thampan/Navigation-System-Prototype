@@ -12,21 +12,22 @@
 #include <nsp/TypeMapping.h>
 
 #define EMPTY_STRING ""
-#define SPACE_STRING " "      /**< \brief Represents Space String */
-#define COMA_STRING ","       /**< \brief Represents Coma String */
-#define SEMI_COLON_STRING ";" /**< \brief Represents Semi Colon String */
-#define NEW_LINE_STRING "\n"  /**< \brief Represents New Line String */
-#define SEMI_COLON_CHAR ';'   /**< \brief Represents Semi Colon Character */
-#define COMA_CHAR ','         /**< \brief Represents Coma Character */
+#define SPACE_STRING " "      /**< @brief Represents Space String */
+#define COMA_STRING ","       /**< @brief Represents Coma String */
+#define SEMI_COLON_STRING ";" /**< @brief Represents Semi Colon String */
+#define NEW_LINE_STRING "\n"  /**< @brief Represents New Line String */
+#define SEMI_COLON_CHAR ';'   /**< @brief Represents Semi Colon Character */
+#define COMA_CHAR ','         /**< @brief Represents Coma Character */
 #define DELIMITER SEMI_COLON_STRING
 
-#define FILE_LOCATION "src/" /**< \brief Represents the CSV File location */
-#define WP_FILE_EXTENSION                                                      \
-  "-wp.txt" /**< \brief Represents the extension for Waypoint File */
-#define POI_FILE_EXTENSION                                                     \
-  "-poi.txt" /**< \brief Represents the extension for POI File */
+#define FILE_LOCATION "src/" /**< @brief Represents the CSV File location */
+#define WP_FILE_EXTENSION \
+  "-wp.txt" /**< @brief Represents the extension for Waypoint File */
+#define POI_FILE_EXTENSION \
+  "-poi.txt" /**< @brief Represents the extension for POI File */
 
-CCSV::CCSV() {
+CCSV::CCSV()
+{
   /* Initialize the delimiters of the CSV file */
   std::vector<char> delimiters;
   delimiters.push_back(SEMI_COLON_CHAR);
@@ -40,7 +41,8 @@ CCSV::CCSV() {
  *
  * @param name the media to be used
  */
-void CCSV::setMediaName(std::string name) {
+void CCSV::setMediaName(std::string name)
+{
   this->m_mediaName = name;
   /* Set the file name as per the requirement <medianame>-<type>.txt */
   m_wpFileName = FILE_LOCATION + m_mediaName + WP_FILE_EXTENSION;
@@ -60,10 +62,13 @@ void CCSV::setMediaName(std::string name) {
  * @return true if the data could be read successfully
  */
 bool CCSV::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
-                    MergeMode mode) {
+                    MergeMode mode)
+{
   bool retVal = true;
-  switch (mode) {
-  case MERGE: {
+  switch (mode)
+  {
+  case MERGE:
+  {
     CCSV::StringVector wpFileContents, poiFileContents;
 
     if (!(
@@ -81,7 +86,8 @@ bool CCSV::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
 
     break;
   }
-  case REPLACE: {
+  case REPLACE:
+  {
     CCSV::StringVector wpFileContents, poiFileContents;
     if (readCSVFile(m_poiFileName,
                     poiFileContents)) /* Read from POI File is Successful */
@@ -89,10 +95,12 @@ bool CCSV::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
       poiDb.clearPoiDatabase(); /* Clear POI Database */
       if (!parseCSVFileContents(
               POI_FILE, poiFileContents, poiDb,
-              waypointDb)) { /* Parse the POI file is unsuccessful */
+              waypointDb))
+      { /* Parse the POI file is unsuccessful */
         retVal = false;
       }
-    } else
+    }
+    else
       retVal = false;
 
     if (readCSVFile(m_wpFileName,
@@ -101,15 +109,18 @@ bool CCSV::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
       waypointDb.clearWpDatabase(); /* Clear Waypoint Database */
       if (!parseCSVFileContents(
               WP_FILE, wpFileContents, poiDb,
-              waypointDb)) { /* Parse the Waypoint file is unsuccessful */
+              waypointDb))
+      { /* Parse the Waypoint file is unsuccessful */
         retVal = false;
       }
-    } else
+    }
+    else
       retVal = false;
 
     break;
   }
-  default: {
+  default:
+  {
     retVal = false;
     std::cout << "ERROR! CCSV::readData() failed! Invalid Merge Mode!"
               << std::endl;
@@ -123,22 +134,27 @@ bool CCSV::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
  * Database
  * @return true if the write is successful, false otherwise
  */
-bool CCSV::writeToCSVWaypointFile(const CWpDatabase &waypointDb) {
+bool CCSV::writeToCSVWaypointFile(const CWpDatabase &waypointDb)
+{
   std::fstream wpFile(m_wpFileName.c_str(), std::ios::out);
   bool retVal = true;
-  if (wpFile.is_open()) {
+  if (wpFile.is_open())
+  {
     /* Get the Pointer to the Database Container */
     CWpDatabase::WaypointDatabaseMap_t db;
     waypointDb.getWpDatabase(db);
 
     /* Iterate through the container and write the contents to the file */
     for (CWpDatabase::WaypointDatabaseMap_t::const_iterator itr = db.begin();
-         itr != db.end(); ++itr) {
+         itr != db.end(); ++itr)
+    {
       wpFile << (itr->first) << DELIMITER << (itr->second).getLatitude()
              << DELIMITER << (itr->second).getLongitude() << std::endl;
     }
     wpFile.close();
-  } else {
+  }
+  else
+  {
     retVal = false;
     std::cout << "ERROR!CCSV::writeData() failed: Unable to open " << wpFile
               << std::endl;
@@ -150,32 +166,40 @@ bool CCSV::writeToCSVWaypointFile(const CWpDatabase &waypointDb) {
  * @param const CPoiDatabase& poiDb [IN] - The reference to the POI Database
  * @return true if the write is successful, false otherwise
  */
-bool CCSV::writeToCSVPoiFile(const CPoiDatabase &poiDb) {
+bool CCSV::writeToCSVPoiFile(const CPoiDatabase &poiDb)
+{
   bool retVal = true;
 
   std::fstream poiFile(m_poiFileName.c_str(), std::ios::out);
-  if (poiFile.is_open()) {
+  if (poiFile.is_open())
+  {
     /* Get the Pointer to the Database Container */
     CPoiDatabase::POIDatabaseMap_t db;
     poiDb.getPoiDatabase(db);
     /* Iterate through the container and write the contents to the file */
     for (CPoiDatabase::POIDatabaseMap_t::const_iterator itr = db.begin();
-         itr != db.end(); ++itr) {
+         itr != db.end(); ++itr)
+    {
       std::string poiType;
       /* Convert the POI Type to String to be stored in the POI file */
       if (type_mapping::convertPoiTypeToString((itr->second).getType(),
-                                               poiType)) {
+                                               poiType))
+      {
         poiFile << poiType << DELIMITER << (itr->first) << DELIMITER
                 << (itr->second.getDescription()) << DELIMITER
                 << (itr->second).getLatitude() << DELIMITER
                 << (itr->second).getLongitude() << std::endl;
-      } else {
+      }
+      else
+      {
         std::cout << "ERROR!CCSV::writeData() failed! Invalid POI Type!"
                   << std::endl;
       }
     }
     poiFile.close();
-  } else {
+  }
+  else
+  {
     retVal = false;
     std::cout << "ERROR!CCSV::writeData() failed: Unable to open " << poiFile
               << std::endl;
@@ -189,14 +213,17 @@ bool CCSV::writeToCSVPoiFile(const CPoiDatabase &poiDb) {
  * @param poiDb the database with points of interest
  * @return true if the data could be saved successfully
  */
-bool CCSV::writeData(const CWpDatabase &waypointDb, const CPoiDatabase &poiDb) {
+bool CCSV::writeData(const CWpDatabase &waypointDb, const CPoiDatabase &poiDb)
+{
   bool retVal = true;
   /* Write data to Waypoint file */
-  if (!writeToCSVWaypointFile(waypointDb)) {
+  if (!writeToCSVWaypointFile(waypointDb))
+  {
     retVal = false;
   }
   /* Write data to POI file */
-  if (!writeToCSVPoiFile(poiDb)) {
+  if (!writeToCSVPoiFile(poiDb))
+  {
     retVal = false;
   }
   return retVal;
@@ -209,19 +236,24 @@ bool CCSV::writeData(const CWpDatabase &waypointDb, const CPoiDatabase &poiDb) {
  * @return true if read is successful, false otherwise
  */
 bool CCSV::readCSVFile(const std::string &fileName,
-                       StringVector &fileContents) {
+                       StringVector &fileContents)
+{
   bool retVal = true;
   std::fstream poiFile(fileName.c_str(), std::ios::in);
-  if (poiFile.is_open()) {
+  if (poiFile.is_open())
+  {
     std::string line;
     /* Fetch the contents line by line and store it into fileContents*/
-    while (getline(poiFile, line)) {
+    while (getline(poiFile, line))
+    {
       fileContents.push_back(line);
       /* No further processing of the text is done here in order to release the
        * resource quickly */
     }
     poiFile.close();
-  } else {
+  }
+  else
+  {
     retVal = false;
     std::cout << "ERROR!CCSV::readCSVFile() failed! Unable to open " << fileName
               << std::endl;
@@ -235,7 +267,8 @@ bool CCSV::readCSVFile(const std::string &fileName,
  * file
  * @return true if initialization is successful, false otherwise
  */
-bool CCSV::initMaxAttributes(const fileType_t &fileType) {
+bool CCSV::initMaxAttributes(const fileType_t &fileType)
+{
   bool retVal = true;
 
   if (WP_FILE == fileType)
@@ -264,10 +297,12 @@ bool CCSV::initMaxAttributes(const fileType_t &fileType) {
  */
 bool CCSV::parseCSVFileContents(const fileType_t &fileType,
                                 const CCSV::StringVector &fileContents,
-                                CPoiDatabase &poiDb, CWpDatabase &wpDb) {
+                                CPoiDatabase &poiDb, CWpDatabase &wpDb)
+{
   /* Initialize the Attribute Extractor (Utility class) with the file specific
    * delimiters and attribute no */
-  if (!initMaxAttributes(fileType)) {
+  if (!initMaxAttributes(fileType))
+  {
     std::cout << "ERROR!  CCSV::parseCSVFileContents()!Invalid file provided"
               << std::endl;
     return false;
@@ -275,7 +310,8 @@ bool CCSV::parseCSVFileContents(const fileType_t &fileType,
   unsigned int lineNumber = 1;
   /* Iterate through the file contents */
   for (CCSV::StringVector::const_iterator itr = fileContents.begin();
-       itr != fileContents.end(); ++itr, ++lineNumber) {
+       itr != fileContents.end(); ++itr, ++lineNumber)
+  {
     std::string line = *itr;
     if ((SPACE_STRING == line) || (NEW_LINE_STRING == line) ||
         (EMPTY_STRING == line))
@@ -299,7 +335,8 @@ bool CCSV::parseCSVFileContents(const fileType_t &fileType,
         ((WP_FILE == fileType) ? validateAndStoreWaypoint(attributeVec, wpDb)
                                : validateAndStorePoi(attributeVec, poiDb));
     /* If not valid print the line number and continue */
-    if (!isValid) {
+    if (!isValid)
+    {
       std::cout << " line_no: " << lineNumber << std::endl;
     }
   }
@@ -314,17 +351,21 @@ bool CCSV::parseCSVFileContents(const fileType_t &fileType,
  * @return true if validation is successful, false otherwise
  */
 bool CCSV::validateAndStorePoi(const StringVector &attributeVec,
-                               CPoiDatabase &poiDb) {
+                               CPoiDatabase &poiDb)
+{
   bool retVal = true;
   CPOI newPoi; /* POI object to be added to the database */
 
   /* Perform Validation of the extracted attributes */
   type_mapping::errorCode_t ec =
       type_mapping::convertStringToCPoiType(attributeVec, newPoi);
-  if (type_mapping::RC_SUCCESS == ec) {
+  if (type_mapping::RC_SUCCESS == ec)
+  {
     /* After successful validation store the attributes to the database */
     poiDb.addPoi(newPoi);
-  } else {
+  }
+  else
+  {
     retVal = false;
     std::cout << "ERROR!CCSV::parseCSVPoiFile() failed! ErrorType:"
               << type_mapping::getErrorType(ec);
@@ -340,17 +381,21 @@ bool CCSV::validateAndStorePoi(const StringVector &attributeVec,
  * @return true if validation is successful, false otherwise
  */
 bool CCSV::validateAndStoreWaypoint(const StringVector &attributeVec,
-                                    CWpDatabase &wpDb) {
+                                    CWpDatabase &wpDb)
+{
   bool retVal = true;
   CWaypoint wp; /* Waypoint to be added in the database */
 
   /* Perform Validation of the extracted attributes */
   type_mapping::errorCode_t ec =
       type_mapping::convertStringToCWaypointType(attributeVec, wp);
-  if (type_mapping::RC_SUCCESS == ec) {
+  if (type_mapping::RC_SUCCESS == ec)
+  {
     /* After successful validation store the attributes to the database */
     wpDb.addWaypoint(wp);
-  } else {
+  }
+  else
+  {
     retVal = false;
     std::cout << "ERROR!CCSV::parseCSVWaypointFile() failed!ErrorType:"
               << type_mapping::getErrorType(ec);

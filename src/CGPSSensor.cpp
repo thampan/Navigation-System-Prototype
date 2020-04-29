@@ -4,13 +4,10 @@
  * Filename        : CGPSSENSOR.CPP
  * Author          : Jishnu M Thampan
  * Description     : class CGPSSensor
- * 				     CGPSSensor class is responsible for fetching the
- *coordinates
- * 					 from the GPS module (keyboard in this case).
- *This class creates
- * 					 a CWaypoint object out of these coordinates
- *and return this
- * 					 object when invoked.
+ * CGPSSensor class is responsible for fetching the coordinates
+ * from the GPS module (keyboard in this case).
+ * This class creates a CWaypoint object out of these coordinates
+ * and return this object when invoked.
  ****************************************************************************/
 // System include files
 #include <limits>
@@ -30,9 +27,10 @@ CGPSSensor::CGPSSensor() {}
 * In case of invalid position from the user,
 * set the name attribute to EMPTY_STRING which
 * indicates that the inpur parsing has been failed
-* @return CWaypoint - CWaypoint object which holds the current position
+* @return CWaypoint CWaypoint object which holds the current position
 */
-CWaypoint CGPSSensor::getCurrentPosition(void) {
+CWaypoint CGPSSensor::getCurrentPosition(void)
+{
   double latitude = 0.0, longitude = 0.0;
   std::string name = "Current Position";
 

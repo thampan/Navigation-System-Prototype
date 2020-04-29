@@ -4,9 +4,8 @@
  * Filename        : CWpDatabase.CPP
  * Author          : Jishnu M Thampan
  * Description     : class CWpDatabase
- * 				     This class maintains the database which consists
- *of
- *					 CWaypoint objects.
+ * This class maintains the database which consists of
+ * CWaypoint objects.
  ****************************************************************************/
 // Own Include Files
 #include <nsp/CWpDatabase.h>
@@ -18,7 +17,8 @@ CWpDatabase::CWpDatabase() {}
  * @param const CWaypoint& wp [IN] - Name (Key value) of the Waypoint Map
  * @return None
  */
-CWaypoint *CWpDatabase::getPointerToWaypoint(std::string name) {
+CWaypoint *CWpDatabase::getPointerToWaypoint(std::string name)
+{
   CWaypoint *pWp = CDatabase::getPointerToData(name);
   return pWp;
 }
@@ -33,7 +33,8 @@ void CWpDatabase::print(void) { CDatabase::printDatabase(); }
  * @param const CWaypoint& wp[IN] - Reference to the Waypoint object to be added
  * @return None
  */
-void CWpDatabase::addWaypoint(const CWaypoint &wp) {
+void CWpDatabase::addWaypoint(const CWaypoint &wp)
+{
   CDatabase::addData(wp.getName(), wp);
 }
 /**
@@ -41,7 +42,8 @@ void CWpDatabase::addWaypoint(const CWaypoint &wp) {
  * @param None
  * @return None
  */
-void CWpDatabase::clearWpDatabase(void) {
+void CWpDatabase::clearWpDatabase(void)
+{
   /* Clear the contents of the Database */
   CDatabase::clearDatabase();
 }
@@ -51,6 +53,7 @@ void CWpDatabase::clearWpDatabase(void) {
  * where the internal container is copied
   * @return None
   */
-void CWpDatabase::getWpDatabase(WaypointDatabaseMap_t &wpDbMap) const {
+void CWpDatabase::getWpDatabase(WaypointDatabaseMap_t &wpDbMap) const
+{
   (CDatabase::getDatabaseContent(wpDbMap));
 }

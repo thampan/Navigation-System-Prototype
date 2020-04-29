@@ -3,27 +3,27 @@
 ****************************************************************************
 * Filename        : Typemapping.cpp
 * Author          : Jishnu M Thampan
-* Description     :
+* Description     : Maps the different types
 ****************************************************************************/
 #include <sstream>
 
 #include <nsp/TypeMapping.h>
 
-#define POI_TYPE_POS (0) /**< \brief Represents the position of POI Type */
-#define POI_NAME_POS (1) /**< \brief Represents the position of POI Name */
-#define POI_DESCRIPTION_POS                                                    \
-  (2) /**< \brief Represents the position of POI Description */
-#define POI_LATITUDE_POS                                                       \
-  (3) /**< \brief Represents the position of POI Latitude */
-#define POI_LONGITUDE_POS                                                      \
-  (4) /**< \brief Represents the position of POI Longitude */
+#define POI_TYPE_POS (0) /**< @brief Represents the position of POI Type */
+#define POI_NAME_POS (1) /**< @brief Represents the position of POI Name */
+#define POI_DESCRIPTION_POS \
+  (2) /**< @brief Represents the position of POI Description */
+#define POI_LATITUDE_POS \
+  (3) /**< @brief Represents the position of POI Latitude */
+#define POI_LONGITUDE_POS \
+  (4) /**< @brief Represents the position of POI Longitude */
 
-#define WAYPOINT_NAME_POS                                                      \
-  (0) /**< \brief Represents the position of Waypoint name */
-#define WAYPOINT_LATITUDE_POS                                                  \
-  (1) /**< \brief Represents the position of Waypoint latitude */
-#define WAYPOINT_LONGITUDE_POS                                                 \
-  (2) /**< \brief Represents the position of Waypoint longitude */
+#define WAYPOINT_NAME_POS \
+  (0) /**< @brief Represents the position of Waypoint name */
+#define WAYPOINT_LATITUDE_POS \
+  (1) /**< @brief Represents the position of Waypoint latitude */
+#define WAYPOINT_LONGITUDE_POS \
+  (2) /**< @brief Represents the position of Waypoint longitude */
 
 /**
  * NameSpace type_mapping stores all the relevant methods of converting from one
@@ -35,7 +35,8 @@
  * Also reports the relevant errors which might arise during the type
  * conversions.
  */
-namespace type_mapping {
+namespace type_mapping
+{
 
 /**
  * Validates the POI Type
@@ -44,7 +45,8 @@ namespace type_mapping {
  */
 static bool validatePoiType(const CPOI::t_poi &poiType);
 
-bool validateLatitude(double &latitude) {
+bool validateLatitude(double &latitude)
+{
   if ((MIN_LATITUDE <= latitude) &&
       (MAX_LATITUDE >=
        latitude)) /* Checks if the Latitude is within the allowed range */
@@ -53,7 +55,8 @@ bool validateLatitude(double &latitude) {
   }
   return false;
 }
-bool validateLongitude(double &longitude) {
+bool validateLongitude(double &longitude)
+{
   if ((MIN_LONGITUDE <= longitude) &&
       (MAX_LONGITUDE >=
        longitude)) /* Checks if the Longitude is within the allowed range */
@@ -69,8 +72,10 @@ bool validateLongitude(double &longitude) {
  * @param double& latitude [OUT] - Converted data
  * @return true if conversion is successful, else false
  */
-bool convertStringToLatitude(const std::string &attr, double &latitude) {
-  if (convertStringToDouble(attr, latitude)) {
+bool convertStringToLatitude(const std::string &attr, double &latitude)
+{
+  if (convertStringToDouble(attr, latitude))
+  {
     return validateLatitude(latitude);
   }
   return false;
@@ -82,8 +87,10 @@ bool convertStringToLatitude(const std::string &attr, double &latitude) {
  * @param double& longitude [OUT] - Converted data
  * @return true if conversion is successful, else false
  */
-bool convertStringToLongitude(const std::string &attr, double &longitude) {
-  if (convertStringToDouble(attr, longitude)) {
+bool convertStringToLongitude(const std::string &attr, double &longitude)
+{
+  if (convertStringToDouble(attr, longitude))
+  {
     return validateLongitude(longitude);
   }
   return false;
@@ -93,8 +100,10 @@ bool convertStringToLongitude(const std::string &attr, double &longitude) {
  * @param const std::string& attr - the string data to be validated
  * @return True if Valid string data, else False
  */
-bool validateStringData(const std::string &attr) {
-  if (attr.find_first_not_of(' ') != std::string::npos) {
+bool validateStringData(const std::string &attr)
+{
+  if (attr.find_first_not_of(' ') != std::string::npos)
+  {
     return true;
   }
   return false;
@@ -104,9 +113,11 @@ bool validateStringData(const std::string &attr) {
  * @param  const CPOI::t_poi& poiType - t_poi type
  * @return True if Valid t_poi Type, else False
  */
-bool validatePoiType(const CPOI::t_poi &poiType) {
+bool validatePoiType(const CPOI::t_poi &poiType)
+{
   bool retVal = false;
-  if ((poiType < CPOI::UNKNOWN) && (poiType >= 0)) {
+  if ((poiType < CPOI::UNKNOWN) && (poiType >= 0))
+  {
     retVal = true;
   }
   return retVal;
@@ -118,14 +129,17 @@ bool validatePoiType(const CPOI::t_poi &poiType) {
  * @param double& val [OUT] - Converted data
  * @return true if conversion is successful, else false
  */
-bool convertStringToDouble(const std::string &attr, double &val) {
+bool convertStringToDouble(const std::string &attr, double &val)
+{
   std::stringstream ss(attr);
   ss >> val;
-  if (ss.fail()) {
+  if (ss.fail())
+  {
     return false;
   }
   unsigned int dotCount = 0, i = 0;
-  for (; i < attr.length() && (dotCount <= 1); i++) {
+  for (; i < attr.length() && (dotCount <= 1); i++)
+  {
     char character = attr[i];
     /* Validation-1: Allow '-' character only in the beginning to indicate a
      * negative number */
@@ -159,47 +173,56 @@ bool convertStringToDouble(const std::string &attr, double &val) {
  */
 errorCode_t
 convertStringToCPoiType(const std::vector<std::string> &poiAttributeVec,
-                        CPOI &poi) {
+                        CPOI &poi)
+{
   errorCode_t retVal = RC_SUCCESS;
   double latitude = 0, longitude = 0;
   std::string name, description;
-  do {
+  do
+  {
     /* Validation-1: Check if there is an attribute mismatch */
-    if (poiAttributeVec.size() != MAX_POI_ATTRIBUTES) {
+    if (poiAttributeVec.size() != MAX_POI_ATTRIBUTES)
+    {
       retVal = RC_INCORRECT_NUMBER_OF_ATTRIBUTES;
       break;
     }
     CPOI::t_poi poiType;
     /* Validation-2: Check if there is a valid POI type */
-    if (!convertStringToPoiType(poiAttributeVec.at(POI_TYPE_POS), poiType)) {
+    if (!convertStringToPoiType(poiAttributeVec.at(POI_TYPE_POS), poiType))
+    {
       retVal = RC_INVALID_POI_TYPE;
       break;
     }
     /* Validation-3: Check if there is a valid latitude */
     if (!convertStringToLatitude(poiAttributeVec.at(POI_LATITUDE_POS),
-                                 latitude)) {
+                                 latitude))
+    {
       retVal = RC_INVALID_LATITUDE;
       break;
     }
     /* Validation-4: Check if there is a valid longitude */
     if (!convertStringToLongitude(poiAttributeVec.at(POI_LONGITUDE_POS),
-                                  longitude)) {
+                                  longitude))
+    {
       retVal = RC_INVALID_LONGITUDE;
       break;
     }
     /* Validation-5: Check if there is a valid name */
-    if (!validateStringData((name = poiAttributeVec.at(POI_NAME_POS)))) {
+    if (!validateStringData((name = poiAttributeVec.at(POI_NAME_POS))))
+    {
       retVal = RC_INVALID_NAME;
       break;
     }
     /* Validation-6: Check if there is a valid description */
     if (!validateStringData(
-            (description = poiAttributeVec.at(POI_DESCRIPTION_POS)))) {
+            (description = poiAttributeVec.at(POI_DESCRIPTION_POS))))
+    {
       retVal = RC_INVALID_DESCRIPTION;
       break;
     }
     /* Validation-7: Check if the POI itself is valid */
-    if (!(poi.set(poiType, name, description, latitude, longitude))) {
+    if (!(poi.set(poiType, name, description, latitude, longitude)))
+    {
       retVal = RC_INVALID_POI;
       break;
     }
@@ -217,35 +240,42 @@ convertStringToCPoiType(const std::vector<std::string> &poiAttributeVec,
  */
 errorCode_t
 convertStringToCWaypointType(const std::vector<std::string> &wpAttributeVec,
-                             CWaypoint &wp) {
+                             CWaypoint &wp)
+{
   errorCode_t retVal = RC_SUCCESS;
   double latitude = 0, longitude = 0;
   std::string name, description;
-  do {
+  do
+  {
     /* Validation-1: Check if there is an attribute mismatch */
-    if (wpAttributeVec.size() != MAX_WAYPOINT_ATTRIBUTES) {
+    if (wpAttributeVec.size() != MAX_WAYPOINT_ATTRIBUTES)
+    {
       retVal = RC_INCORRECT_NUMBER_OF_ATTRIBUTES;
       break;
     }
     /* Validation-2: Check if there is a valid latitude */
     if (!convertStringToLatitude(wpAttributeVec.at(WAYPOINT_LATITUDE_POS),
-                                 latitude)) {
+                                 latitude))
+    {
       retVal = RC_INVALID_LATITUDE;
       break;
     }
     /* Validation-3: Check if there is a valid longitude */
     if (!convertStringToLongitude(wpAttributeVec.at(WAYPOINT_LONGITUDE_POS),
-                                  longitude)) {
+                                  longitude))
+    {
       retVal = RC_INVALID_LONGITUDE;
       break;
     }
     /* Validation-4: Check if there is a valid name */
-    if (!validateStringData((name = wpAttributeVec.at(WAYPOINT_NAME_POS)))) {
+    if (!validateStringData((name = wpAttributeVec.at(WAYPOINT_NAME_POS))))
+    {
       retVal = RC_INVALID_NAME;
       break;
     }
     /* Validation-5: Finally, Check if the Waypoint itself is valid */
-    if (!wp.set(name, latitude, longitude)) {
+    if (!wp.set(name, latitude, longitude))
+    {
       retVal = RC_INVALID_WAYPOINT;
       break;
     }
@@ -261,26 +291,33 @@ convertStringToCWaypointType(const std::vector<std::string> &wpAttributeVec,
  * @return true if conversion is successful, else false
  */
 bool convertPoiTypeToString(const CPOI::t_poi &poiType,
-                            std::string &stringType) {
+                            std::string &stringType)
+{
   bool retVal = true;
-  switch (poiType) {
-  case CPOI::RESTAURANT: {
+  switch (poiType)
+  {
+  case CPOI::RESTAURANT:
+  {
     stringType = "RESTAURANT";
     break;
   }
-  case CPOI::TOURISTIC: {
+  case CPOI::TOURISTIC:
+  {
     stringType = "TOURISTIC";
     break;
   }
-  case CPOI::GASSTATION: {
+  case CPOI::GASSTATION:
+  {
     stringType = "GASSTATION";
     break;
   }
-  case CPOI::UNIVERSITY: {
+  case CPOI::UNIVERSITY:
+  {
     stringType = "UNIVERSITY";
     break;
   }
-  default: {
+  default:
+  {
     stringType = "UNKNOWN";
     retVal = false;
   }
@@ -295,20 +332,31 @@ bool convertPoiTypeToString(const CPOI::t_poi &poiType,
  * @return true if conversion is successful, else false
  */
 bool convertStringToPoiType(const std::string &stringType,
-                            CPOI::t_poi &poiType) {
+                            CPOI::t_poi &poiType)
+{
   bool retVal = false;
-  if ("RESTAURANT" == stringType) {
+  if ("RESTAURANT" == stringType)
+  {
     poiType = CPOI::RESTAURANT;
-  } else if ("TOURISTIC" == stringType) {
+  }
+  else if ("TOURISTIC" == stringType)
+  {
     poiType = CPOI::TOURISTIC;
-  } else if ("GASSTATION" == stringType) {
+  }
+  else if ("GASSTATION" == stringType)
+  {
     poiType = CPOI::GASSTATION;
-  } else if ("UNIVERSITY" == stringType) {
+  }
+  else if ("UNIVERSITY" == stringType)
+  {
     poiType = CPOI::UNIVERSITY;
-  } else {
+  }
+  else
+  {
     poiType = CPOI::UNKNOWN;
   }
-  if (validatePoiType(poiType)) {
+  if (validatePoiType(poiType))
+  {
     retVal = true;
   }
   return retVal;
@@ -318,42 +366,55 @@ bool convertStringToPoiType(const std::string &stringType,
  * @param  const errorCode_t& ec [IN] - The errorCode to be converted
  * @return string - the equivalent string represenation of the error code
  */
-std::string getErrorType(const errorCode_t &ec) {
+std::string getErrorType(const errorCode_t &ec)
+{
   std::string errorType = "Unknown";
-  switch (ec) {
-  case RC_INVALID_LATITUDE: {
+  switch (ec)
+  {
+  case RC_INVALID_LATITUDE:
+  {
     errorType = "INVALID_LATITUDE";
     break;
   }
-  case RC_INVALID_LONGITUDE: {
+  case RC_INVALID_LONGITUDE:
+  {
     errorType = "INVALID_LONGITUDE";
     break;
   }
-  case RC_INVALID_POI_TYPE: {
+  case RC_INVALID_POI_TYPE:
+  {
     errorType = "INVALID_POI_TYPE";
     break;
   }
-  case RC_INVALID_WAYPOINT: {
+  case RC_INVALID_WAYPOINT:
+  {
     errorType = "INVALID_WAYPOINT";
     break;
   }
-  case RC_INVALID_POI: {
+  case RC_INVALID_POI:
+  {
     errorType = "INVALID_POI";
     break;
   }
-  case RC_INCORRECT_NUMBER_OF_ATTRIBUTES: {
+  case RC_INCORRECT_NUMBER_OF_ATTRIBUTES:
+  {
     errorType = "INCORRECT_NUMBER_OF_ATTRIBUTES";
     break;
   }
-  case RC_INVALID_NAME: {
+  case RC_INVALID_NAME:
+  {
     errorType = "INVALID_NAME";
     break;
   }
-  case RC_INVALID_DESCRIPTION: {
+  case RC_INVALID_DESCRIPTION:
+  {
     errorType = "INVALID_DESCRIPTION";
     break;
   }
-  default: { errorType = "Unknown"; }
+  default:
+  {
+    errorType = "Unknown";
+  }
   }
   return errorType;
 }

@@ -4,25 +4,19 @@
  * Filename        : CPOI.CPP
  * Author          : Jishnu M Thampan
  * Description     : class CPOI
- *  				 This class represents Point of Interests which
- *may
- * 					 optionally be present in a route. A CPOI
- *object is
- * 					 contained in the CPOIDatabase class. The CPOI
- *class
- * 					 is a CWaypoint class (inherited) and has
- *description
- * 					 of the POI as the extra attribute from the
- *CWaypoint
- * 					 class. Different kinds of POIs are possible
- *depending
- * 					 on the type and other attributes.
+ * This class represents Point of Interests which may
+ * optionally be present in a route. A CPOI object is
+ * contained in the CPOIDatabase class. The CPOI class
+ * is a CWaypoint class (inherited) and has description
+ * of the POI as the extra attribute from the CWaypoint
+ * class. Different kinds of POIs are possible depending
+ * on the type and other attributes.
  ****************************************************************************/
 #include <string>
 // Own Include Files
 #include <nsp/CPOI.h>
 
-#define SPACE_CHAR " " /**< \brief Represents Space character */
+#define SPACE_CHAR " " /**< @brief Represents Space character */
                        // Method Implementations
 
 /**
@@ -45,11 +39,12 @@ CPOI::CPOI(t_poi type, std::string name, std::string description,
     : CWaypoint(latitude, longitude, name), /* Calls the Waypoint (Base class)
                                                constructor to set the class
                                                attributes */
-      m_type(type), /* Initialize m_type object with the default type or the
+      m_type(type),                         /* Initialize m_type object with the default type or the
                        provided type */
-      m_description(description) /* Initialize m_description object with the
+      m_description(description)            /* Initialize m_description object with the
                                     default type or the provided type */
-{}
+{
+}
 /**
  * Sets all of the POI attributes
  * @param t_poi type 			  - type of the POI object
@@ -64,27 +59,38 @@ CPOI::CPOI(t_poi type, std::string name, std::string description,
  * @return true if the set is succeful, else false
  */
 bool CPOI::set(CPOI::t_poi type, std::string name, std::string description,
-               double latitude, double longitude) {
+               double latitude, double longitude)
+{
   bool isValidPoi = false;
-  do {
-    if ((type < CPOI::UNKNOWN) && (type >= 0)) {
+  do
+  {
+    if ((type < CPOI::UNKNOWN) && (type >= 0))
+    {
       isValidPoi = true;
-    } else {
+    }
+    else
+    {
       isValidPoi = false;
       std::cout << "ERROR!Invalid Poi Type!" << std::endl;
       break;
     }
-    if (description.find_first_not_of(' ') != std::string::npos) {
+    if (description.find_first_not_of(' ') != std::string::npos)
+    {
       isValidPoi = true;
-    } else {
+    }
+    else
+    {
       isValidPoi = false;
       std::cout << "--ERROR!Invalid Poi Description!" << std::endl;
       break;
     }
-    if ((isValidPoi = CWaypoint::set(name, latitude, longitude))) {
+    if ((isValidPoi = CWaypoint::set(name, latitude, longitude)))
+    {
       m_type = type;
       m_description = description;
-    } else {
+    }
+    else
+    {
       m_type = CPOI::UNKNOWN;
       m_description = DEFAULT_STRING;
     }
@@ -107,7 +113,8 @@ bool CPOI::set(CPOI::t_poi type, std::string name, std::string description,
  */
 void CPOI::getAllDataByReference(std::string &name, double &latitude,
                                  double &longitude, t_poi &type,
-                                 std::string &description) const {
+                                 std::string &description) const
+{
   CWaypoint::getAllDataByReference(
       name, latitude,
       longitude); /* Get the Waypoint Data from the Waypoint (Base) Class */
@@ -128,7 +135,8 @@ void CPOI::print(void) { std::cout << *this << "\n"; }
  * @param  const CPOI& poi [IN] - The POI object whose data is to be printed
  * @return None
  */
-std::ostream &operator<<(std::ostream &stream, const CPOI &poi) {
+std::ostream &operator<<(std::ostream &stream, const CPOI &poi)
+{
   std::string name = DEFAULT_STRING, description = DEFAULT_STRING;
   double latitude = 0.0, longitude = 0.0;
   CPOI::t_poi type = CPOI::UNKNOWN;
@@ -140,24 +148,30 @@ std::ostream &operator<<(std::ostream &stream, const CPOI &poi) {
   std::string poiType = "of Type ";
   stream << "Point of interest" << std::endl;
   stream << "=================" << std::endl;
-  switch (type) {
-  case CPOI::RESTAURANT: {
+  switch (type)
+  {
+  case CPOI::RESTAURANT:
+  {
     poiType += "Restaurant:";
     break;
   }
-  case CPOI::TOURISTIC: {
+  case CPOI::TOURISTIC:
+  {
     poiType += "Touristic:";
     break;
   }
-  case CPOI::GASSTATION: {
+  case CPOI::GASSTATION:
+  {
     poiType += "Gasstation:";
     break;
   }
-  case CPOI::UNIVERSITY: {
+  case CPOI::UNIVERSITY:
+  {
     poiType += "University:";
     break;
   }
-  default: {
+  default:
+  {
     poiType += "Unknown:";
     stream << ", Unknown type!: " << description << std::endl;
   }

@@ -13,25 +13,25 @@
 
 #include <nsp/TypeMapping.h>
 
-#define EMPTY_STRING ""       /**< \brief Represents an EMPTY STRING */
-#define JSON_BEGIN_STRING "{" /**< \brief Represents an BEGIN STRING */
-#define JSON_END_STRING "}"   /**< \brief Represents an END STRING */
-#define WAYPOINTS_ARRAY_NAME                                                   \
-  "waypoints"                 /**< \brief Represents the name of WP DB */
-#define POI_ARRAY_NAME "pois" /**< \brief Represents the name of POI DB */
+#define EMPTY_STRING ""       /**< @brief Represents an EMPTY STRING */
+#define JSON_BEGIN_STRING "{" /**< @brief Represents an BEGIN STRING */
+#define JSON_END_STRING "}"   /**< @brief Represents an END STRING */
+#define WAYPOINTS_ARRAY_NAME \
+  "waypoints"                 /**< @brief Represents the name of WP DB */
+#define POI_ARRAY_NAME "pois" /**< @brief Represents the name of POI DB */
 
-#define FILE_LOCATION                                                          \
-  "myCode/" /**< \brief Represents the CSV/JSON File location */
-#define FILE_EXTENSION                                                         \
-  ".json" /**< \brief Represents the extension of the json file */
+#define FILE_LOCATION \
+  "myCode/" /**< @brief Represents the CSV/JSON File location */
+#define FILE_EXTENSION \
+  ".json" /**< @brief Represents the extension of the json file */
 
-#define ERR_IGNORE                                                             \
-  (                                                                            \
-      false) /**< \brief Represents the case when a json parsing error is      \
+#define ERR_IGNORE                                                        \
+  (                                                                       \
+      false) /**< @brief Represents the case when a json parsing error is \
                 ignored */
-#define ERR_CRITICAL                                                           \
-  (                                                                            \
-      true) /**< \brief Represents the case when a json parsing error is       \
+#define ERR_CRITICAL                                                     \
+  (                                                                      \
+      true) /**< @brief Represents the case when a json parsing error is \
                critical */
 
 /**
@@ -41,7 +41,8 @@
  *
  * @param name the media to be used
  */
-void CJsonPersistence::setMediaName(std::string name) {
+void CJsonPersistence::setMediaName(std::string name)
+{
   this->m_mediaName = name;
   /* Set the file name as per the requirement <medianame>-<type>.txt */
   m_fileName = FILE_LOCATION + m_mediaName + FILE_EXTENSION;
@@ -58,24 +59,32 @@ void CJsonPersistence::setMediaName(std::string name) {
  */
 bool CJsonPersistence::checkAndExtractParameterName(const db_type_t &db,
                                                     const std::string &in,
-                                                    std::string &out) {
+                                                    std::string &out)
+{
   bool isFound = false;
   unsigned int arraySize = 0;
   const std::string *attributePtr = NULL;
   const std::string wpAttributes[] = {"name", "latitude", "longitude"};
   const std::string poiAttributes[] = {"name", "latitude", "longitude",
                                        "description", "type"};
-  if (WP_DB == db) {
+  if (WP_DB == db)
+  {
     attributePtr = wpAttributes;
     arraySize = sizeof(wpAttributes) / sizeof(wpAttributes[0]);
-  } else if (POI_DB == db) {
+  }
+  else if (POI_DB == db)
+  {
     attributePtr = poiAttributes;
     arraySize = sizeof(poiAttributes) / sizeof(poiAttributes[0]);
-  } else {
+  }
+  else
+  {
     return isFound;
   }
-  for (unsigned int i = 0; i < arraySize; i++) {
-    if (attributePtr[i] == in) {
+  for (unsigned int i = 0; i < arraySize; i++)
+  {
+    if (attributePtr[i] == in)
+    {
       out = attributePtr[i];
       isFound = true;
       break;
@@ -92,15 +101,21 @@ bool CJsonPersistence::checkAndExtractParameterName(const db_type_t &db,
  * extracted from the Json file
  * @return true if the database is a valid one, false otherwise
  */
-bool CJsonPersistence::isValidDb(const std::string &dbName, db_type_t &dbType) {
+bool CJsonPersistence::isValidDb(const std::string &dbName, db_type_t &dbType)
+{
   bool isValid = false;
-  if (dbName == WAYPOINTS_ARRAY_NAME) {
+  if (dbName == WAYPOINTS_ARRAY_NAME)
+  {
     dbType = CJsonPersistence::WP_DB;
     isValid = true;
-  } else if (dbName == POI_ARRAY_NAME) {
+  }
+  else if (dbName == POI_ARRAY_NAME)
+  {
     dbType = CJsonPersistence::POI_DB;
     isValid = true;
-  } else {
+  }
+  else
+  {
     dbType = CJsonPersistence::UNKNOWN_DB;
   }
   return isValid;
@@ -112,15 +127,19 @@ bool CJsonPersistence::isValidDb(const std::string &dbName, db_type_t &dbType) {
  * the attributes of the current state
  * @return true if the data parsing has been completed, false otherwise
  */
-bool CJsonPersistence::isDataParseComplete(const stateInfo_t &stateInfo) {
+bool CJsonPersistence::isDataParseComplete(const stateInfo_t &stateInfo)
+{
   /* Data Parsing is considered completed only if all the attributes of wp db or
    * poi db
    * are read successfully
    */
-  if (stateInfo.dbType == WP_DB) {
+  if (stateInfo.dbType == WP_DB)
+  {
     return (stateInfo.data.latitude != 0 && stateInfo.data.longitude != 0 &&
             stateInfo.data.name != DEFAULT_STRING);
-  } else if (stateInfo.dbType == POI_DB) {
+  }
+  else if (stateInfo.dbType == POI_DB)
+  {
     return (stateInfo.data.latitude != 0 && stateInfo.data.longitude != 0 &&
             stateInfo.data.name != DEFAULT_STRING &&
             stateInfo.data.description != DEFAULT_STRING &&
@@ -138,7 +157,8 @@ bool CJsonPersistence::isDataParseComplete(const stateInfo_t &stateInfo) {
  * @return None
  */
 void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
-                                          stateInfo_t &stateInfo) {
+                                          stateInfo_t &stateInfo)
+{
   /* Get the stateInfo struct attributes by reference */
 
   parser_state_t &currentState = stateInfo.currentState;
@@ -158,11 +178,16 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
    * ignored and
    *   the parsing is resumed
    */
-  switch (currentState) {
-  case CJsonPersistence::IS_WAITING_FOR_FIRST_TOKEN: {
-    if (APT::CJsonToken::BEGIN_OBJECT == currentToken->getType()) {
+  switch (currentState)
+  {
+  case CJsonPersistence::IS_WAITING_FOR_FIRST_TOKEN:
+  {
+    if (APT::CJsonToken::BEGIN_OBJECT == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_NAME;
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_BEGIN_OBJECT_TOKEN", ERR_CRITICAL}; /* Parsing is aborted
                                                           since the format is
@@ -171,15 +196,18 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_NAME: {
+  case CJsonPersistence::IS_WAITING_FOR_DB_NAME:
+  {
     bool isError = true;
     currentState = CJsonPersistence::IS_WAITING_FOR_DB_NAME_SEPARATOR;
-    if (APT::CJsonToken::STRING == currentToken->getType()) {
+    if (APT::CJsonToken::STRING == currentToken->getType())
+    {
       APT::CJsonStringToken *sToken = (APT::CJsonStringToken *)currentToken;
       isError =
           !isValidDb(sToken->getValue(), dbType); /*Validate the Database */
     }
-    if (isError) {
+    if (isError)
+    {
       error_data_t error_data = {"INVALID_DB_NAME_TOKEN",
                                  ERR_IGNORE}; /* Ignore the error since it is
                                                  the problem with this db */
@@ -187,10 +215,14 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_NAME_SEPARATOR: {
-    if (APT::CJsonToken::NAME_SEPARATOR == currentToken->getType()) {
+  case CJsonPersistence::IS_WAITING_FOR_DB_NAME_SEPARATOR:
+  {
+    if (APT::CJsonToken::NAME_SEPARATOR == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_ARRAY_BEGIN;
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_DB_NAME_SEPARATOR_TOKEN",
           ERR_CRITICAL}; /* Parsing is aborted since the format is not correct
@@ -199,10 +231,14 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_ARRAY_BEGIN: {
-    if (APT::CJsonToken::BEGIN_ARRAY == currentToken->getType()) {
+  case CJsonPersistence::IS_WAITING_FOR_DB_ARRAY_BEGIN:
+  {
+    if (APT::CJsonToken::BEGIN_ARRAY == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_OBJ_BEGIN;
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_DB_ARRAY_BEGIN_TOKEN",
           ERR_CRITICAL}; /* Parsing is aborted since the format is not correct
@@ -211,10 +247,14 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_BEGIN: {
-    if (APT::CJsonToken::BEGIN_OBJECT == currentToken->getType()) {
+  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_BEGIN:
+  {
+    if (APT::CJsonToken::BEGIN_OBJECT == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_NAME;
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_DB_OBJ_BEGIN_TOKEN", ERR_CRITICAL}; /* Parsing is aborted
                                                           since the format is
@@ -223,9 +263,11 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_NAME: {
+  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_NAME:
+  {
     currentState = CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_NAME_SEPARATOR;
-    if (APT::CJsonToken::STRING == currentToken->getType()) {
+    if (APT::CJsonToken::STRING == currentToken->getType())
+    {
       APT::CJsonStringToken *sToken = (APT::CJsonStringToken *)currentToken;
       if (!checkAndExtractParameterName(
               dbType, sToken->getValue(),
@@ -239,12 +281,17 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
         error_data_t error_data = {"INVALID_DB_OBJ_ATTR_NAME_TOKEN",
                                    ERR_IGNORE};
         throw error_data;
-      } else if (isDataParseComplete(stateInfo)) {
+      }
+      else if (isDataParseComplete(stateInfo))
+      {
         error_data_t error_data = {"OBJECT NOT TERMINATED", ERR_CRITICAL};
         throw error_data;
       }
-    } else {
-      if (isDataParseComplete(stateInfo)) {
+    }
+    else
+    {
+      if (isDataParseComplete(stateInfo))
+      {
         error_data_t error_data = {"Database attribute count exceeded",
                                    ERR_CRITICAL};
         throw error_data;
@@ -254,10 +301,14 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_NAME_SEPARATOR: {
-    if (APT::CJsonToken::NAME_SEPARATOR == currentToken->getType()) {
+  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_NAME_SEPARATOR:
+  {
+    if (APT::CJsonToken::NAME_SEPARATOR == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_VALUE;
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_DB_OBJ_ATTR_NAME_SEPARATOR_TOKEN",
           ERR_CRITICAL}; /* Parsing is aborted since the format is not correct
@@ -266,12 +317,15 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_VALUE: {
-    if (APT::CJsonToken::STRING == currentToken->getType()) {
+  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_VALUE:
+  {
+    if (APT::CJsonToken::STRING == currentToken->getType())
+    {
       APT::CJsonStringToken *sToken = (APT::CJsonStringToken *)currentToken;
       currentState =
           CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_VALUE_SEPARATOR;
-      if (parameter == "name") {
+      if (parameter == "name")
+      {
         if (name ==
             DEFAULT_STRING) /* Name is checked if it is written already, so that
                                repeated redundant fields can be detected*/
@@ -283,12 +337,16 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
             error_data_t error_data = {"INVALID_NAME", ERR_IGNORE};
             throw error_data;
           }
-        } else {
+        }
+        else
+        {
           error_data_t error_data = {"Repeated 'name' Entry detected",
                                      ERR_IGNORE};
           throw error_data;
         }
-      } else if (parameter == "description") {
+      }
+      else if (parameter == "description")
+      {
         if (description == DEFAULT_STRING) /* Description is checked if it is
                                               written already, so that repeated
                                               redundant fields can be detected*/
@@ -300,12 +358,16 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
             error_data_t error_data = {"INVALID_DESCRIPTION", ERR_IGNORE};
             throw error_data;
           }
-        } else {
+        }
+        else
+        {
           error_data_t error_data = {"Repeated description field detected",
                                      ERR_IGNORE};
           throw error_data;
         }
-      } else if (parameter == "type") {
+      }
+      else if (parameter == "type")
+      {
         if (poiType == CPOI::UNKNOWN) /* POI is checked if it is written
                                          already, so that repeated redundant
                                          fields can be detected*/
@@ -317,21 +379,27 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
             error_data_t error_data = {"INVALID_POI_TYPE", ERR_IGNORE};
             throw error_data;
           }
-        } else {
+        }
+        else
+        {
           error_data_t error_data = {"Repeated type field detected",
                                      ERR_IGNORE};
           throw error_data;
         }
-      } else {
+      }
+      else
+      {
         error_data_t error_data = {"Error", ERR_IGNORE};
         throw error_data;
       }
     }
-    if (APT::CJsonToken::NUMBER == currentToken->getType()) {
+    if (APT::CJsonToken::NUMBER == currentToken->getType())
+    {
       APT::CJsonNumberToken *nToken = (APT::CJsonNumberToken *)currentToken;
       currentState =
           CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_VALUE_SEPARATOR;
-      if (parameter == "latitude") {
+      if (parameter == "latitude")
+      {
         if (!latitude) /* Latitude is checked if it is written already, so that
                           repeated redundant fields can be detected*/
         {
@@ -342,12 +410,16 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
             error_data_t error_data = {"INVALID_LATITUDE", ERR_IGNORE};
             throw error_data;
           }
-        } else {
+        }
+        else
+        {
           error_data_t error_data = {"Repeated latitude field detectced",
                                      ERR_IGNORE};
           throw error_data;
         }
-      } else if (parameter == "longitude") {
+      }
+      else if (parameter == "longitude")
+      {
         if (!longitude) /* Longitude is checked if it is written already, so
                            that repeated redundant fields can be detected*/
         {
@@ -358,34 +430,46 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
             error_data_t error_data = {"INVALID_LONGITUDE", ERR_IGNORE};
             throw error_data;
           }
-        } else {
+        }
+        else
+        {
           error_data_t error_data = {"Repeated Longitude field detected",
                                      ERR_IGNORE};
           throw error_data;
         }
-      } else {
+      }
+      else
+      {
         error_data_t error_data = {"Error", ERR_IGNORE};
         throw error_data;
       }
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_VALUE_SEPARATOR: {
-    if (APT::CJsonToken::VALUE_SEPARATOR == currentToken->getType()) {
+  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_VALUE_SEPARATOR:
+  {
+    if (APT::CJsonToken::VALUE_SEPARATOR == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_OBJ_ATTR_NAME;
-    } else if (APT::CJsonToken::END_OBJECT == currentToken->getType()) {
+    }
+    else if (APT::CJsonToken::END_OBJECT == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_OBJ_SEPARATOR;
       if (isDataParseComplete(stateInfo)) /* Checks if the one set of data is
                                              extracted successfully */
       {
         stateInfo.dataReady = true; // flag is set so that this set of data can
                                     // be written to the db
-      } else {
+      }
+      else
+      {
         error_data_t error_data = {"Incorrect Number of attributes",
                                    ERR_IGNORE};
         throw error_data;
       }
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_DB_OBJ_ATTR_VALUE_SEPARATOR_TOKEN",
           ERR_CRITICAL}; /* Parsing is aborted since the format is not correct
@@ -394,13 +478,19 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_SEPARATOR: {
+  case CJsonPersistence::IS_WAITING_FOR_DB_OBJ_SEPARATOR:
+  {
     stateInfo.data.reset(); /* Reset the data after parsing one set */
-    if (APT::CJsonToken::VALUE_SEPARATOR == currentToken->getType()) {
+    if (APT::CJsonToken::VALUE_SEPARATOR == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_OBJ_BEGIN;
-    } else if (APT::CJsonToken::END_ARRAY == currentToken->getType()) {
+    }
+    else if (APT::CJsonToken::END_ARRAY == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_ARRAY_SEPARATOR;
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_DB_OBJ_SEPARATOR_TOKEN",
           ERR_CRITICAL}; /* Parsing is aborted since the format is not correct
@@ -409,12 +499,18 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_DB_ARRAY_SEPARATOR: {
-    if (APT::CJsonToken::VALUE_SEPARATOR == currentToken->getType()) {
+  case CJsonPersistence::IS_WAITING_FOR_DB_ARRAY_SEPARATOR:
+  {
+    if (APT::CJsonToken::VALUE_SEPARATOR == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_DB_NAME;
-    } else if (APT::CJsonToken::END_OBJECT == currentToken->getType()) {
+    }
+    else if (APT::CJsonToken::END_OBJECT == currentToken->getType())
+    {
       currentState = CJsonPersistence::IS_WAITING_FOR_PARSE_END;
-    } else {
+    }
+    else
+    {
       error_data_t error_data = {
           "INVALID_DB_ARRAY_SEPARATOR_TOKEN", ERR_CRITICAL}; /* Parsing is
                                                                 aborted since
@@ -424,11 +520,15 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
     }
     break;
   }
-  case CJsonPersistence::IS_WAITING_FOR_PARSE_END: {
+  case CJsonPersistence::IS_WAITING_FOR_PARSE_END:
+  {
     std::cout << "Parsing completed" << std::endl;
     break;
   }
-  default: { std::cout << "FATAL ERROR occured!! System Restart needed!"; }
+  default:
+  {
+    std::cout << "FATAL ERROR occured!! System Restart needed!";
+  }
   }
 }
 /**
@@ -455,23 +555,29 @@ void CJsonPersistence::processStateChange(APT::CJsonToken *currentToken,
  * @return true if the data could be read successfully
  */
 bool CJsonPersistence::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
-                                MergeMode mode) {
+                                MergeMode mode)
+{
   bool retVal = true;
   std::fstream jsonFile(m_fileName.c_str(), std::ios::in);
-  if (!jsonFile.is_open()) {
+  if (!jsonFile.is_open())
+  {
     return false;
   }
-  switch (mode) {
-  case MERGE: {
+  switch (mode)
+  {
+  case MERGE:
+  {
     // no change
     break;
   }
-  case REPLACE: {
+  case REPLACE:
+  {
     waypointDb.clearWpDatabase();
     poiDb.clearPoiDatabase();
     break;
   }
-  default: {
+  default:
+  {
     std::cout << "Invalid Mode Specified" << std::endl;
     return false;
   }
@@ -479,11 +585,13 @@ bool CJsonPersistence::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
   APT::CJsonScanner scannerObj(jsonFile);
   stateInfo_t stateInfo;
   APT::CJsonToken *currentToken = NULL;
-  try {
+  try
+  {
     while (NULL !=
            (currentToken = scannerObj.nextToken())) // Get the token 1 by 1
     {
-      try {
+      try
+      {
         processStateChange(currentToken, stateInfo); // Parse the Token through
                                                      // the state machine and
                                                      // take appropriate actions
@@ -493,21 +601,25 @@ bool CJsonPersistence::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
           stateInfo.dataReady = false; // reset the data ready flag
           if (stateInfo.data.isValid)  //  Check if the data is valid, if valid,
                                        //  add to database
-            switch (stateInfo.dbType) {
-            case CJsonPersistence::WP_DB: {
+            switch (stateInfo.dbType)
+            {
+            case CJsonPersistence::WP_DB:
+            {
               CWaypoint wpObj(stateInfo.data.latitude, stateInfo.data.longitude,
                               stateInfo.data.name);
               waypointDb.addWaypoint(wpObj);
               break;
             }
-            case CJsonPersistence::POI_DB: {
+            case CJsonPersistence::POI_DB:
+            {
               CPOI poiObj(stateInfo.data.poiType, stateInfo.data.name,
                           stateInfo.data.description, stateInfo.data.latitude,
                           stateInfo.data.longitude);
               poiDb.addPoi(poiObj);
               break;
             }
-            default: {
+            default:
+            {
               CJsonPersistence::error_data_t errorData;
               errorData.errorMsg = "INVALID_DB_OBJ_ATTR_NAME";
               throw errorData;
@@ -515,9 +627,10 @@ bool CJsonPersistence::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
             }
           stateInfo.data.reset(); // resets the data to parse the next set
         }
-      } catch (CJsonPersistence::error_data_t &errorData) // Exception handling
-                                                          // for exceptions from
-                                                          // the state machine
+      }
+      catch (CJsonPersistence::error_data_t &errorData) // Exception handling
+                                                        // for exceptions from
+                                                        // the state machine
       {
         if (stateInfo.data.isValid) // to stop reporting more errors if 1 type
                                     // of error is detected
@@ -536,14 +649,16 @@ bool CJsonPersistence::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
           stateInfo.data.isValid = false; // This is set so that this invalid
                                           // data is not written to the database
         }
-      } catch (...) // default exception handler
+      }
+      catch (...) // default exception handler
       {
         throw; // delegate exception handling to the central default exception
                // handler
       }
     }
-  } catch (std::string &illegalChar) // Exception handling for exceptions from
-                                     // the scanner class
+  }
+  catch (std::string &illegalChar) // Exception handling for exceptions from
+                                   // the scanner class
   {
     std::cout << "Exception occurred!:Illegal character: " << illegalChar
               << " in Json file at line number :" << scannerObj.scannedLine()
@@ -551,7 +666,8 @@ bool CJsonPersistence::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
     std::cout << "Aborted Json parsing due to incorrect Json Format, Please "
                  "correct and try again!"
               << std::endl;
-  } catch (...) // central default exception handler
+  }
+  catch (...) // central default exception handler
   {
     std::cout << "An unknown exception has occurred!" << std::endl;
     std::cout << "Please check the json file and try again!" << std::endl;
@@ -562,21 +678,28 @@ bool CJsonPersistence::readData(CWpDatabase &waypointDb, CPoiDatabase &poiDb,
  * Writes the member data(jsonFileContents) to the Json File
  * @return true if the write is successful, false otherwise
  */
-bool CJsonPersistence::writeToJsonFile() {
+bool CJsonPersistence::writeToJsonFile()
+{
   bool retVal = true;
   std::fstream jsonFile(m_fileName.c_str(), std::ios::out);
-  if (jsonFile.is_open()) {
-    if (!jsonFileContents.empty()) {
+  if (jsonFile.is_open())
+  {
+    if (!jsonFileContents.empty())
+    {
       jsonFile << JSON_BEGIN_STRING << std::endl;
     }
     for (StringVector::const_iterator itr = jsonFileContents.begin();
-         itr != jsonFileContents.end(); ++itr) {
+         itr != jsonFileContents.end(); ++itr)
+    {
       jsonFile << (*itr) << std::endl;
     }
-    if (!jsonFileContents.empty()) {
+    if (!jsonFileContents.empty())
+    {
       jsonFile << JSON_END_STRING;
     }
-  } else {
+  }
+  else
+  {
     retVal = false;
     std::cout << "ERROR!CJsonPersistence::writeData() failed: Unable to open "
               << jsonFile << std::endl;
@@ -591,7 +714,8 @@ bool CJsonPersistence::writeToJsonFile() {
  * @return true if the data could be saved successfully
  */
 bool CJsonPersistence::writeData(const CWpDatabase &waypointDb,
-                                 const CPoiDatabase &poiDb) {
+                                 const CPoiDatabase &poiDb)
+{
   bool retVal = true;
 
   CPoiDatabase::POIDatabaseMap_t poiDbMap;
