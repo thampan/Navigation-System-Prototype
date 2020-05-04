@@ -1,7 +1,7 @@
 ## Navigation-System-Design
 Design of a Navigation System Prototype using objected oriented programming. A navigation system consists of several components which are briefly explained below.
 
-+ ### Modules
+### Modules
 + ###### Central System - Navigation System
 The core component that integrates all the subcomponents
 + ###### Waypoint
