@@ -1,22 +1,22 @@
 ## Navigation-System-Design
 Design of a Navigation System Prototype using objected oriented programming. A navigation system consists of several components which are briefly explained below.
 
-### +Modules
-###### +Central System - Navigation System
++ ### Modules
++ ###### Central System - Navigation System
 The core component that integrates all the subcomponents
-###### +Waypoint
++ ###### Waypoint
 The waypoints between a source and destination
-###### +Point of Interest
++  ###### Point of Interest
 The POIs present between a source and destination
-###### +Route
++ ###### Route
 Route consists of a cobination of the desired waypoints and pois
-###### +GPS Sensor
++ ###### GPS Sensor
 Gets the current position coordinates
-###### +Databases
++ ###### Databases
 The waypoint and poi information is stored in a database.
-###### +Attribute Extractor
++ ###### Attribute Extractor
 Extracts the required attributes from the specified file.
-###### +File handlers - CSV and JSON
++ ###### File handlers - CSV and JSON
 Reads/Writes data to persistent memory
 
 ### Test
