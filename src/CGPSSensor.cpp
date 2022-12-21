@@ -19,20 +19,19 @@
 // Method Implementations
 
 /**
-* Constructor of CGPSSensor class
-*/
+ * Constructor of CGPSSensor class
+ */
 CGPSSensor::CGPSSensor() {}
 /**
-* Get the current position from the user
-* In case of invalid position from the user,
-* set the name attribute to EMPTY_STRING which
-* indicates that the inpur parsing has been failed
-* @return CWaypoint CWaypoint object which holds the current position
-*/
-CWaypoint CGPSSensor::getCurrentPosition(void)
-{
+ * Get the current position from the user
+ * In case of invalid position from the user,
+ * set the name attribute to EMPTY_STRING which
+ * indicates that the inpur parsing has been failed
+ * @return CWaypoint CWaypoint object which holds the current position
+ */
+CWaypoint CGPSSensor::getCurrentPosition(void) {
   double latitude = 0.0, longitude = 0.0;
-  std::string name = "Current Position";
+  std::string name = "The Current Position";
 
   std::cout << "GPS Sensor" << std::endl;
   std::cout << "   Enter latitude" << std::endl;
