@@ -702,7 +702,7 @@ bool CJsonPersistence::writeToJsonFile()
   {
     retVal = false;
     std::cout << "ERROR!CJsonPersistence::writeData() failed: Unable to open "
-              << jsonFile << std::endl;
+              << m_fileName << std::endl;
   }
   return retVal;
 }

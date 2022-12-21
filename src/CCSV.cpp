@@ -156,7 +156,7 @@ bool CCSV::writeToCSVWaypointFile(const CWpDatabase &waypointDb)
   else
   {
     retVal = false;
-    std::cout << "ERROR!CCSV::writeData() failed: Unable to open " << wpFile
+    std::cout << "ERROR!CCSV::writeData() failed: Unable to open " << m_wpFileName
               << std::endl;
   }
   return retVal;
@@ -201,7 +201,7 @@ bool CCSV::writeToCSVPoiFile(const CPoiDatabase &poiDb)
   else
   {
     retVal = false;
-    std::cout << "ERROR!CCSV::writeData() failed: Unable to open " << poiFile
+    std::cout << "ERROR!CCSV::writeData() failed: Unable to open " << m_poiFileName
               << std::endl;
   }
   return retVal;
