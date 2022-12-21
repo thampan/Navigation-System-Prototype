@@ -1,6 +1,9 @@
 ## Navigation-System-Design
 Design of a Navigation System Prototype using objected oriented programming. A navigation system consists of several components which are briefly explained below.
 
+### Build Status
+![example workflow](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg)
+
 ### Modules
 + ###### Central System - Navigation System
 The core component that integrates all the subcomponents
