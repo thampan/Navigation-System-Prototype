@@ -2,9 +2,13 @@
 Design of a Navigation System Prototype using objected oriented programming. A navigation system consists of several components which are briefly explained below.
 
 ### Build Status
-![example workflow](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg)
-![example branch parameter](![example branch parameter](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg/badge.svg?branch=master))
-![example event parameter](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg?event=push)
+![my workflow](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg)
+
+
+![my branch parameter](![example branch parameter](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg/badge.svg?branch=master))
+
+
+![my event parameter](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg?event=push)
 
 ### Modules
 + ###### Central System - Navigation System
