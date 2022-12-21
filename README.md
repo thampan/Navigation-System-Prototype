@@ -3,6 +3,8 @@ Design of a Navigation System Prototype using objected oriented programming. A n
 
 ### Build Status
 ![example workflow](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg)
+![example branch parameter](![example branch parameter](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg/badge.svg?branch=master))
+![example event parameter](https://github.com/thampan/navigation-system-prototype/actions/workflows/cmake.yml/badge.svg?event=push)
 
 ### Modules
 + ###### Central System - Navigation System
